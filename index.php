@@ -2,55 +2,51 @@
       <!-- Slider Area Start -->
       <section class="slider-area" id="home">
          <div class="slider owl-carousel">
-            <div class="single-slide" style="background-image:url('<?php echo get_template_directory_uri(); ?>/assets/img/slider/slide-1.jpg')">
+<!-- Query for showing sliders post -->
+            <?php 
+               $args = array(
+                  'post_type' => 'sliders',
+                  'posts_per_page' => 3
+               );
+               $query = new WP_Query($args);
+               while($query->have_posts()){
+                  $query->the_post();
+                  //without advanced custom field
+                  // $sub_heading = get_post_meta( get_the_ID(), 'sub_heading', true );
+                  // $btn_text = get_post_meta( get_the_ID(), 'btn_text', true );
+                  // $btn_link = get_post_meta( get_the_ID(), 'btn_link', true );
+
+                  //with advanced custom field
+                  $sub_heading =  get_field('sub_title');
+                  $btn_text    =  get_field('btn_text');
+                  $btn_link    =  get_field('btn_link');
+             
+            ?>
+
+            <div class="single-slide" style="background-image: url('<?php the_post_thumbnail_url(); ?>)">
                <div class="container">
                   <div class="row">
                      <div class="col-xl-12">
                         <div class="slide-table">
                            <div class="slide-tablecell">
-                              <h4>We Are Advanced Batch 11</h4>
-                              <h2>Digital Agency</h2>
-                              <p>We are a passionate digital design agency that specializes in beautiful and easy-to-use digital design & web development services.</p>
-                              <a href="#" class="box-btn">our projects <i class="fa fa-angle-double-right"></i></a>
+                              <?php if($sub_heading){?>
+                              <h4><?php echo $sub_heading; ?></h4>
+                           <?php } ?>
+                              <h2><?php the_title(); ?></h2>
+                              <?php the_content(); ?> 
+                              <?php if ($btn_text) { ?>
+                                  <a href="<?php echo $btn_link; ?>" class="box-btn"><?php echo $btn_text; ?> <i class="fa fa-angle-double-right"></i></a>
+                              <?php  } ?>
+                             
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-            <div class="single-slide" style="background-image:url('<?php echo get_template_directory_uri(); ?>/assets/img/slider/slide-2.jpg')">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-xl-12">
-                        <div class="slide-table">
-                           <div class="slide-tablecell">
-                              <h4>We Are Halim</h4>
-                              <h2>Modern Agency</h2>
-                              <p>We are a passionate digital design agency that specializes in beautiful and easy-to-use digital design & web development services.</p>
-                              <a href="#" class="box-btn">contact us <i class="fa fa-angle-double-right"></i></a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="single-slide" style="background-image:url('<?php echo get_template_directory_uri(); ?>/assets/img/slider/slide-3.jpg')">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-xl-12">
-                        <div class="slide-table">
-                           <div class="slide-tablecell">
-                              <h4>
-                              We Are Halim</h4>
-                              <h2>Creative Agency</h2>
-                              <p>We are a passionate digital design agency that specializes in beautiful and easy-to-use digital design & web development services.</p>
-                              <a href="#" class="box-btn">crreative team <i class="fa fa-angle-double-right"></i></a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+
+          <?php   } wp_reset_postdata(); ?> 
+           
          </div>
       </section>
       <!-- Slider Area Start -->
@@ -192,54 +188,29 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-laptop"></i>
-                     <h4>Web Design </h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-gears"></i>
-                     <h4>Web Development</h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-mobile"></i>
-                     <h4>Responsive Design</h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-magic"></i>
-                     <h4>Graphic Design</h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-pencil"></i>
-                     <h4>Creative Design</h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <div class="single-service">
-                     <i class="fa fa-fa fa-lightbulb-o"></i>
-                     <h4>Branding</h4>
-                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry </p>
-                  </div>
-               </div>
+
+               <!-- Query for showing services post -->
+               <?php 
+                  $args =array(
+                     'post_type' => 'services',
+                     'posts_per_page' => 6
+                  );
+                  $query = new WP_Query($args);
+                  while($query->have_posts()){
+                     $query->the_post();
+                     $service_icon = get_field('services_icon');
+                   ?>
+                      <div class="col-lg-4 col-md-6">
+                        <!-- Single Service -->
+                        <div class="single-service">
+                           <i class="<?php echo $service_icon ?>"></i>
+                           <h4><?php the_title(); ?> </h4>
+                          <?php the_content(); ?>"
+                        </div>
+                      </div>
+                   <?php  } wp_reset_postdata(); ?>
+              
+           
             </div>
          </div>
       </section>
@@ -284,56 +255,58 @@
                   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry typesetting industry.d </p>
                </div>
             </div>
-            <div class="row">
+           
+             <div class="row">
+                <?php
+                     $args = array(
+                        'post_type' => 'teams',
+                        'posts_per_page' => 3,
+                        'orderby' => 'menu_order'
+                     );
+
+                     $query = new WP_Query($args);
+                     while($query->have_posts()){
+                        $query->the_post();
+
+                        $facebook = get_field('team_facebook');
+                        $twitter = get_field('team_twitter');
+                        $linkedin = get_field('team_linkedin');
+                        $google = get_field('team_google');
+                  ?>
                <div class="col-md-4">
                   <div class="single-team">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/team/1.jpg" alt="" />
+                     <?php the_post_thumbnail(); ?>
                      <div class="team-hover">
                         <div class="team-content">
-                           <h4>john doe <span>web developer</span></h4>
+                           <h4><?php the_title(); ?> <span><?php the_content(); ?></span></h4>
                            <ul>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                              <?php if ($facebook) { ?>
+                                <li><a href="<?php echo $facebook; ?>"><i class="fa fa-facebook"></i></a></li>
+                             <?php } ?>
+
+                              <?php if ($twitter) { ?>
+                                  <li><a href="<?php echo $twitter; ?>"><i class="fa fa-twitter"></i></a></li>
+                             <?php } ?>
+
+                              <?php if ($linkedin) { ?>
+                               <li><a href="<?php echo $linkedin; ?>"><i class="fa fa-linkedin"></i></a></li>
+                             <?php } ?>
+
+                              <?php if ($google) { ?>
+                                <li><a href="<?php echo $google; ?>"><i class="fa fa-google-plus"></i></a></li>
+                             <?php } ?>
+                            
+                           
+                              
+                             
                            </ul>
                         </div>
                      </div>
                   </div>
                </div>
-               <div class="col-md-4">
-                  <div class="single-team">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/team/2.jpg" alt="" />
-                     <div class="team-hover">
-                        <div class="team-content">
-                           <h4>john doe <span>web developer</span></h4>
-                           <ul>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="single-team">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/team/3.jpg" alt="" />
-                     <div class="team-hover">
-                        <div class="team-content">
-                           <h4>john doe <span>web developer</span></h4>
-                           <ul>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+          <?php }  wp_reset_postdata(); ?>
+
+           </div>
          </div>
       </section>
       <!-- Team Area End -->

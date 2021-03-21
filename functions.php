@@ -29,5 +29,63 @@
 
 add_action( 'wp_enqueue_scripts','halim_css_js_enqueue');
 
+//Wordpress theme setup
+
+ function halim_theme_setup(){
+ 	add_theme_support( 'title-tag');
+   //To enable Featured Image only for specific post types,
+ 	add_theme_support('post-thumbnails', array('sliders','teams') ); 
+
+ 	load_theme_textdomain( 'halim', get_template_directory_uri() . '/languages' );
+ 	register_nav_menus( array(
+ 	     'main-menu' => __('Primary Menu','halim')
+ 	) );
+ }
+ add_action( 'after_setup_theme', 'halim_theme_setup');
+
+
+ function halim_custome_posts(){
+ //Customs posts for slider
+ 	register_post_type( 'sliders', array(  
+ 		'labels'=>array(
+ 			'name' => __('Sliders','halim'),
+ 			'singular_name' => __('Slider','halim')
+ 		),
+ 		'public' => true,
+ 		'supports' => array('title','editor','thumbnail','custom-fields')
+
+ ));
+//Customs posts for services
+ register_post_type( 'services', array(  
+ 		'labels'=>array(
+ 			'name' => __('Services','halim'),
+ 			'singular_name' => __('Service','halim')
+ 		),
+ 		'public' => true,
+ 		'supports' => array('title','editor','custom-fields')
+
+ ));
+
+ //Customs posts for team
+ register_post_type( 'teams', array(  
+ 		'labels'=>array(
+ 			'name' => __('Teams','halim'),
+ 			'singular_name' => __('Team','halim')
+ 		),
+ 		'public' => true,
+ 		'supports' => array('title','editor','thumbnail','custom-fields','page-attributes')
+
+ ));
+ }
+ add_action( 'init', 'halim_custome_posts');
+
+
+
+
+
+
+
+
+
+
 ?>
- 
