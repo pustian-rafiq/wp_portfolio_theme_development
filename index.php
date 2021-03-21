@@ -327,34 +327,32 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="testimonials owl-carousel">
+
+<!-- Query for testimonial section -->
+                     <?php 
+                        $args = array(
+                           'post_type' => 'testimonials',
+                           'posts_per_page' => 6
+                        );
+
+                        $query = new WP_Query($args);
+                        while($query->have_posts()){
+                           $query->the_post();
+                           $name = get_field('name');
+                           $designation = get_field('designation');
+                           $description = get_field('description');
+                           ?>
+                   
                      <div class="single-testimonial">
                         <div class="testi-img">
-                           <img src="<?php echo get_template_directory_uri(); ?>/assets/img/testimonials/03.png" alt="" />
+                          <?php the_post_thumbnail(); ?>
                         </div>
-                        <p>" Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda culpa cumque dicta sint soluta voluptas eius iusto modi reprehenderit sint soluta voluptas. "</p>
-                        <h4>john doe <span>web developer</span></h4>
+                        <p>"<?php echo $description ?>"</p>
+                        <h4><?php echo $name ?> <span><?php echo $designation ?></span></h4>
                      </div>
-                     <div class="single-testimonial">
-                        <div class="testi-img">
-                           <img src="<?php echo get_template_directory_uri(); ?>/assets/img/testimonials/01.png" alt="" />
-                        </div>
-                        <p>" Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda culpa cumque dicta sint soluta voluptas eius iusto modi reprehenderit sint soluta voluptas. "</p>
-                        <h4>john doe <span>web developer</span></h4>
-                     </div>
-                     <div class="single-testimonial">
-                        <div class="testi-img">
-                           <img src="<?php echo get_template_directory_uri(); ?>/assets/img/testimonials/04.png" alt="" />
-                        </div>
-                        <p>" Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda culpa cumque dicta sint soluta voluptas eius iusto modi reprehenderit sint soluta voluptas. "</p>
-                        <h4>john doe <span>web developer</span></h4>
-                     </div>
-                     <div class="single-testimonial">
-                        <div class="testi-img">
-                           <img src="<?php echo get_template_directory_uri(); ?>/assets/img/testimonials/02.png" alt="" />
-                        </div>
-                        <p>" Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda culpa cumque dicta sint soluta voluptas eius iusto modi reprehenderit sint soluta voluptas. "</p>
-                        <h4>john doe <span>web developer</span></h4>
-                     </div>
+                 <?php  } wp_reset_postdata(); ?>
+
+
                   </div>
                </div>
             </div>
@@ -373,60 +371,36 @@
                </div>
             </div>
             <div class="row">
+               <?php 
+                  $args = array(
+                     'post_type' => 'post',
+                     'posts_per_page' => 3
+                  );
+                   $query = new WP_Query($args);
+                        while($query->have_posts()){
+                           $query->the_post();
+                           ?>
+ 
                <div class="col-md-4">
                   <div class="single-blog">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/blog/blog1.jpg" alt="" />
+                    <?php the_post_thumbnail(); ?>
                      <div class="post-content">
                         <div class="post-title">
-                           <h4><a href="#">blog title</a></h4>
+                           <h4><a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a></h4>
                         </div>
                         <div class="pots-meta">
                            <ul>
-                              <li><a href="#">25 oct 2018</a></li>
-                              <li><a href="#">admin</a></li>
+                              <li><a href="#"> <?php echo get_the_date(); ?></a></li>
+                              <li><a href="#"> <?php echo get_the_author(); ?></a></li>
                            </ul>
                         </div>
-                        <p>Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis.</p>
-                        <a href="#" class="box-btn">read more <i class="fa fa-angle-double-right"></i></a>
+                        <p> <?php the_excerpt(); ?></p>
+                        <a href=" <?php the_permalink(); ?>" class="box-btn">read more <i class="fa fa-angle-double-right"></i></a>
                      </div>
                   </div>
                </div>
-               <div class="col-md-4">
-                  <div class="single-blog">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/blog/blog2.jpg" alt="" />
-                     <div class="post-content">
-                        <div class="post-title">
-                           <h4><a href="#">blog title</a></h4>
-                        </div>
-                        <div class="pots-meta">
-                           <ul>
-                              <li><a href="#">25 oct 2018</a></li>
-                              <li><a href="#">admin</a></li>
-                           </ul>
-                        </div>
-                        <p>Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis.</p>
-                        <a href="#" class="box-btn">read more <i class="fa fa-angle-double-right"></i></a>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="single-blog">
-                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/blog/blog3.jpg" alt="" />
-                     <div class="post-content">
-                        <div class="post-title">
-                           <h4><a href="#">blog title</a></h4>
-                        </div>
-                        <div class="pots-meta">
-                           <ul>
-                              <li><a href="#">25 oct 2018</a></li>
-                              <li><a href="#">admin</a></li>
-                           </ul>
-                        </div>
-                        <p>Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis.</p>
-                        <a href="#" class="box-btn">read more <i class="fa fa-angle-double-right"></i></a>
-                     </div>
-                  </div>
-               </div>
+               <?php } wp_reset_postdata(); ?>
+
             </div>
          </div>
       </section>

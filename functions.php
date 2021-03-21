@@ -33,8 +33,10 @@ add_action( 'wp_enqueue_scripts','halim_css_js_enqueue');
 
  function halim_theme_setup(){
  	add_theme_support( 'title-tag');
-   //To enable Featured Image only for specific post types,
- 	add_theme_support('post-thumbnails', array('sliders','teams') ); 
+   //To enable Featured Image only for specific post types
+ 	//ekhane post ta hoilo wp er default post section er jonno,,post na dle feature image asbe na 
+ 	add_theme_support('post-thumbnails', array('post','sliders','teams','testimonials') );
+
 
  	load_theme_textdomain( 'halim', get_template_directory_uri() . '/languages' );
  	register_nav_menus( array(
@@ -76,12 +78,44 @@ add_action( 'wp_enqueue_scripts','halim_css_js_enqueue');
  		'supports' => array('title','editor','thumbnail','custom-fields','page-attributes')
 
  ));
+
+ //Customs posts for testimonials
+ register_post_type( 'testimonials', array(  
+ 		'labels'=>array(
+ 			'name' => __('Testimonials','halim'),
+ 			'singular_name' => __('Testimonial','halim')
+ 		),
+ 		'public' => true,
+ 		'supports' => array('title','thumbnail','custom-fields','page-attributes')
+
+ ));
  }
  add_action( 'init', 'halim_custome_posts');
 
+// Add function for changing default comment design
+ function halim_comment_fields($fields){
+ 	$comment = $fields['comment'];
+ 	$author = $fields['author'];
+ 	$email = $fields['email'];
+ 	$url = $fields['url'];
+ 	$cookies = $fields['cookies'];
 
+ 	unset($fields['comment']);
+ 	unset($fields['author']);
+ 	unset($fields['email']);
+ 	unset($fields['url']);
+ 	unset($fields['cookies']);
+//set the design layout,,first name then email and others
+   
+ 	$fields['author'] = $author;
+ 	$fields['email'] = $email;
+ 	$fields['url'] = $url;
+ 	$fields['comment'] = $comment;
+ 	$fields['cookies'] = $cookies;
 
-
+ 	return $fields;
+ }
+ add_filter('comment_form_fields','halim_comment_fields',10,1);
 
 
 
